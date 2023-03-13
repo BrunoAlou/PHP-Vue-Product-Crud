@@ -12,7 +12,7 @@ Cadastro dos produtos;
 #### O sistema deve apresentar o valor de cada item multiplicado pela quantidade adquirida e a
 quantidade pago de imposto em cada item, um totalizador do valor da compra e um
 totalizador do valor dos impostos;
-####A venda deverá ser salva;
+#### A venda deverá ser salva;
 
 
 ---
@@ -27,9 +27,14 @@ São necessárias as seguintes tecnologias instaladas em seu ambiente local para
 ```bash
 
 # Clone este repositório
-$ git clone git@github.com:BrunoAlou/centi-teste-imgur.git
+$ git clone git@github.com:BrunoAlou/Dev-Fullstack-PHP-SoftExpert.git
 
-$ cd centi-teste-imgur
+$ cd 
+
+Na pasta api executar:
+php -S 127.0.0.1:8000
+
+Na pasta frontend executar:
 
 $ npm install
 
