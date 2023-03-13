@@ -9,9 +9,7 @@ Cadastro dos produtos;
 #### Cadastro dos tipos de cada produto;
 #### Cadastro dos valores percentuais de imposto dos tipos de produtos;
 #### A tela de venda, onde serão informados os produtos e quantidades adquiridas;
-#### O sistema deve apresentar o valor de cada item multiplicado pela quantidade adquirida e a
-quantidade pago de imposto em cada item, um totalizador do valor da compra e um
-totalizador do valor dos impostos;
+#### O sistema deve apresentar o valor de cada item multiplicado pela quantidade adquirida e aquantidade pago de imposto em cada item, um totalizador do valor da compra e um totalizador do valor dos impostos;
 #### A venda deverá ser salva;
 
 
@@ -29,7 +27,8 @@ São necessárias as seguintes tecnologias instaladas em seu ambiente local para
 # Clone este repositório
 $ git clone git@github.com:BrunoAlou/Dev-Fullstack-PHP-SoftExpert.git
 
-$ cd 
+$ Utilize o arquivo .SQL para cadastrar no postgres a tabela SQL
+$ Utilize os arquivos seed e migration para popular o banco (Não se esqueça de alterar os dados de database)
 
 Na pasta api executar:
 php -S 127.0.0.1:8000
