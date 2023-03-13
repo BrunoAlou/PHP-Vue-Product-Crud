@@ -6,13 +6,13 @@
 ## Necessidades do projeto
 
 Cadastro dos produtos;
-• Cadastro dos tipos de cada produto;
-• Cadastro dos valores percentuais de imposto dos tipos de produtos;
-• A tela de venda, onde serão informados os produtos e quantidades adquiridas;
-• O sistema deve apresentar o valor de cada item multiplicado pela quantidade adquirida e a
+#### Cadastro dos tipos de cada produto;
+#### Cadastro dos valores percentuais de imposto dos tipos de produtos;
+#### A tela de venda, onde serão informados os produtos e quantidades adquiridas;
+#### O sistema deve apresentar o valor de cada item multiplicado pela quantidade adquirida e a
 quantidade pago de imposto em cada item, um totalizador do valor da compra e um
 totalizador do valor dos impostos;
-• A venda deverá ser salva;
+####A venda deverá ser salva;
 
 
 ---
@@ -43,16 +43,17 @@ $ npm run start
 
 Ferramentas utilizadas no projeto:
 
-#### **Back-end** ([php](https://reactjs.org/))
+#### **Back-end** 
+([php](https://reactjs.org/))
 
+#### **Database** 
+([postgresql](https://www.postgresql.org/))
 
-#### **Database** ([postgresql](https://www.postgresql.org/))
+#### **Front-end** 
+([Vuejs](https://reactjs.org/))
 
-
-
-#### **Front-end** ([Vuejs](https://reactjs.org/))
-
-- **[BootstrapVue](https://bootstrap-vue.org/)**
+- **[BootstrapVue]
+(https://bootstrap-vue.org/)**
 
 ---
 
