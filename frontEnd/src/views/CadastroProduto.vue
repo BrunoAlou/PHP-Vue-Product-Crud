@@ -1,37 +1,43 @@
 <template>
   <div>
-    <NavigationTab exact-active-class="active"/>
+    <b-toast :no-auto-hide="true"></b-toast>
+    <NavigationTab exact-active-class="active" />
     <b-row class="justify-content-center text-center mt-5">
-      <b-col class="text-center col-4" align-self="center">
-        <b-form style="margin: 25px;">
-          <b-form-group id="input-group-2" label="Produto:" label-for="input-2">
-            <b-form-input id="input-2" v-model="nomeProduto" required />
+      <b-col class="text-center" md="6" lg="4" align-self="center">
+        <b-form style="margin: 25px;" ref="form" @submit.prevent="cadastrarProduto">
+          <b-form-group id="input-nome-produto" label="Produto:" label-for="input-nome">
+            <b-form-input id="input-nome" v-model="nomeProduto" required class="w-100" />
           </b-form-group>
-          <b-form-group id="input-group-3" label="Descrição:" label-for="input-3">
-            <b-form-input id="input-3" v-model="descricaoProduto" />
+          <b-form-group id="input-descricao-produto" label="Descrição:" label-for="input-descricao">
+            <b-form-input id="input-descricao" v-model="descricaoProduto" />
           </b-form-group>
-          <b-form-group id="input-group-4" label="Preço:" label-for="input-4">
-            <b-input-group id="input-group-4" label="Preço:" prepend="R$" append=",00" label-for="input-4">
-            <b-form-input id="input-4" type="number" v-model="precoProduto" />
-            </b-input-group>          
+          <b-form-group id="input-preco-produto" label="Preço:" label-for="input-preco">
+            <b-input-group id="input-group-preco" label="Preço:" prepend="R$" append=",00" label-for="input-preco">
+              <b-form-input id="input-preco" type="number" v-model="precoProduto" required/>
+            </b-input-group>
           </b-form-group>
-          <b-form-group id="input-group-5" label="Tipo:" label-for="input-5">
-            <b-form-select class="w-100" v-model="tipoProdutoSelecionado" :options="tiposOptions" required />
+          <b-form-group id="input-tipo-produto" label="Tipo:" label-for="input-tipo">
+            <b-form-select id="input-tipo" class="w-100" v-model="tipoProdutoSelecionado" :options="tiposOptions"
+              required />
           </b-form-group>
-          <b-button-group>
+          <b-button-group class="w-100">
             <b-button variant="dark" @click="exibirModalCadastroTipo = true">Cadastrar Tipo de Produto</b-button>
-            <b-button type="submit" variant="primary" @click="cadastrarProduto">Cadastrar Produto</b-button>
+            <b-button :disabled="!nomeProduto || precoProduto === 0 || !tipoProdutoSelecionado" type="submit" variant="primary">Cadastrar Produto</b-button>
           </b-button-group>
-          <b-modal v-model="exibirModalCadastroTipo" title="Cadastrar Tipo de Produto">
-            <form ref="form" @submit.stop.prevent="handleSubmit">
-              <b-form-group label="Nome:">
-                <b-form-input v-model="nomeTipo" />
+          <b-modal v-model="exibirModalCadastroTipo" title="Cadastrar Tipo de Produto" hide-footer>
+            <form>
+              <b-form-group label="Nome Tipo:">
+                <b-form-input v-model="nomeTipo" required />
               </b-form-group>
-              <b-input-group label="Percentual de Imposto:" append="%">
-                <b-form-input type="number" v-model="percImpostoTipo" />
+              <b-form-group label="Percentual de Imposto:">
+              <b-input-group append="%">
+                <b-form-input type="number" v-model="percImpostoTipo" required/>
               </b-input-group>
-              <b-button variant="primary" @click="cadastrarTipo">Cadastrar</b-button>
-              <b-button variant="secondary" @click="exibirModalCadastroTipo = false">Cancelar</b-button>
+            </b-form-group>
+              <b-button-group class="mt-2 btn-group w-100">
+                <b-button :disabled="!nomeTipo || !percImpostoTipo" variant="primary" @click="cadastrarTipo">Cadastrar</b-button>
+                <b-button variant="secondary" @click="exibirModalCadastroTipo = false">Cancelar</b-button>
+              </b-button-group>
             </form>
           </b-modal>
         </b-form>
@@ -42,12 +48,14 @@
 <script>
 import axios from 'axios';
 import NavigationTab from '@/components/NavigationTab.vue'
+import { BToast } from 'bootstrap-vue';
 
 
 export default {
   name: 'CadastroProduto',
   components: {
     NavigationTab,
+    BToast
   },
   data() {
     return {
@@ -65,18 +73,6 @@ export default {
   },
   mounted() {
     this.atualizarTipos();
-
-    axios.interceptors.response.use(
-      response => {
-        return response;
-      },
-      error => {
-        if (error.response.status === 401) {
-          this.$router.push({ name: 'Login' });
-        }
-        return Promise.reject(error);
-      }
-    );
   },
   computed: {
     tiposOptions() {
@@ -102,51 +98,61 @@ export default {
     },
     cadastrarTipo() {
       axios.post(`/tipo_produto`, {
-          nome: this.nomeTipo,
-          perc_imposto: this.percImpostoTipo
-        })
+        nome: this.nomeTipo,
+        perc_imposto: this.percImpostoTipo
+      })
         .then(response => {
           this.atualizarTipos(response.data);
           this.exibirModalCadastroTipo = false;
           this.nomeTipo = '';
           this.percImpostoTipo = 0;
+          console.log(response.data);
+          this.$bvToast.toast('Tipo do produto cadastrado com sucesso!', {
+            title: 'Sucesso',
+            variant: 'success',
+            autoHideDelay: 5000,
+          });
         })
         .catch(error => {
           console.log(error);
+          this.$bvToast.toast('Erro ao cadastrar o tipo do produto!', {
+            title: 'Erro',
+            variant: 'danger',
+            autoHideDelay: 5000,
+          });
         });
     },
     cadastrarProduto() {
       axios.post(`/produto`, {
-          nome: this.nomeProduto,
-          descricao: this.descricaoProduto,
-          preco: this.precoProduto,
-          id_tipo_produto: this.tipoProdutoSelecionado
-        })
+        nome: this.nomeProduto,
+        descricao: this.descricaoProduto,
+        preco: this.precoProduto,
+        id_tipo_produto: this.tipoProdutoSelecionado
+      })
         .then(response => {
           console.log(response.data);
-          this.produtoCadastrado = true;
+          this.$bvToast.toast('Produto cadastrado com sucesso!', {
+            title: 'Sucesso',
+            variant: 'success',
+            autoHideDelay: 5000,
+          });
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
+            this.$bvToast.toast('Erro ao cadastrar o produto!', {
+            title: 'Erro',
+            variant: 'danger',
+            autoHideDelay: 5000,
+          });
         });
     },
-    fecharModal() {
-      this.exibirModal = false;
-      this.$emit('fechar');
-    },
-    salvarTipo() {
-      axios.post(`/tipo_produto`, {
-          nome: this.nomeTipo
-        })
-        .then(response => {
-          this.$emit('tipo-cadastrado', response.data);
-          this.nomeTipo = '';
-          this.exibirModal = false;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
   }
 }
 </script>
+<style>
+/* Define as colunas ocupando todo o espaço disponível em telas pequenas */
+.b-col {
+  flex-basis: 100%;
+  max-width: 100%;
+}
+</style>
