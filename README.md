@@ -25,7 +25,7 @@ São necessárias as seguintes tecnologias instaladas em seu ambiente local para
 ```bash
 
 # Clone este repositório
-$ git clone git@github.com:BrunoAlou/Dev-Fullstack-PHP-SoftExpert.git
+$ git clone git@github.com:BrunoAlou/PHP-Vue-Product-Crud.git
 
 $ Utilize o arquivo .SQL para cadastrar no postgres a tabela SQL
 $ Utilize os arquivos seed e migration para popular o banco (Não se esqueça de alterar os dados de database)
